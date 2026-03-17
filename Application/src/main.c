@@ -257,90 +257,46 @@ int main(void)
   {
     /* USER CODE END WHILE */
 
-	  // reception des donnees lora
-	  if (HAL_UART_Receive(lora.huart, (uint8_t*)&lora.rx_byte, 1, 100) == HAL_OK)
-	     {
-	         // stocker le byte dans le buffer
-	         lora.rx_buffer[lora.rx_index++] = lora.rx_byte;
+	st_flag= LORA_P2P_Available(&lora);
+	//printf("Flag_available : %d\r\n", st_flag);
+	if(st_flag)
+	{
+	     st_flag = LORA_P2P_Read(&lora,&packet);
 
-	         if (lora.rx_index >= LORA_RX_BUFFER_SIZE-1)
-	             lora.rx_index = 0;
+	  	      //printf("Flag : %d\r\n", st_flag);
 
-	         lora.rx_buffer[lora.rx_index] = '\0';
+	  	      if (st_flag != LORA_STATUS_OK)
+	  	      {
+	  	          HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
+	  	          //printf("Erreur de lecture des Trames LoRa\r\n");
 
-	         // vérifier si une trame LoRa est arrivée
-	         if (strstr(lora.rx_buffer, "+TEST: RX"))
-	         {
-	             st_flag = LORA_P2P_Read(&lora,&packet);
+	  	      }
+	  	      else
+	  	      {
+	  	          HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
+	  	          printf("\r\n");
+	  	          printf("=================== RX ========================\r\n");
+	  	          printf("Lecture des Trames reussies\r\n");
 
-	             printf("Flag : %d\r\n", st_flag);
+	  	          printf("Trame : ");
+	  	          for(int i = 0; i < packet.length; i++)
+	  	          {
+	  	              printf("%c", packet.payload[i]);
+	  	          }
+	  	          printf("\r\n");
 
-	             if (st_flag != LORA_STATUS_OK)
-	             {
-	                 HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
-	                 printf("Erreur lecture trame LoRa\r\n");
-	             }
-	             else
-	             {
-	                 HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
-
-	                 printf("Trame : ");
-	                 for(int i = 0; i < packet.length; i++)
-	                 {
-	                     printf("%c", packet.payload[i]);
-	                 }
-
-	                 printf("\r\nRSSI : %d\r\n", packet.rssi);
-	                 printf("SNR  : %d\r\n", packet.snr);
-	             }
-
-	             memset(lora.rx_buffer,0,LORA_RX_BUFFER_SIZE);
-	             lora.rx_index = 0;
-
-	             LORA_P2P_StartRX(&lora);
-	         }
-	     }
-
-//	st_flag= LORA_P2P_Available(&lora);
-//	//printf("Flag_available : %d\r\n", st_flag);
-//	if(st_flag)
-//	{
-//	    st_flag = LORA_P2P_Read(&lora,&packet);
-//
-//	      printf("Flag : %d\r\n", st_flag);
-//
-//	      if (st_flag != LORA_STATUS_OK)
-//	      {
-//	          HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
-//	          printf("Erreur de lecture des Trames LoRa\r\n");
-//
-//	      }
-//	      else
-//	      {
-//	          HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
-//
-//	          printf("Lecture des Trames reussies\r\n");
-//
-//	          printf("Trame : ");
-//	          for(int i = 0; i < packet.length; i++)
-//	          {
-//	              printf("%c", packet.payload[i]);
-//	          }
-//	          printf("\r\n");
-//
-//	          printf("RSSI : %d\r\n", packet.rssi);
-//	          printf("SNR  : %d\r\n", packet.snr);
-//	          memset(lora.rx_buffer,0,LORA_RX_BUFFER_SIZE);
-//	          LORA_P2P_StartRX(&lora);
-//
-//	      }
-//	      HAL_Delay(50);
-//	  }
-//	  else
-//	  {
-//		  //printf("Aucune trame en reception actuellement\r\n");
-//
-//	  }
+	  	          printf("RSSI : %d\r\n", packet.rssi);
+	  	          printf("SNR  : %d\r\n", packet.snr);
+	  	          memset(lora.rx_buffer,0,LORA_RX_BUFFER_SIZE);
+	  	          LORA_P2P_StartRX(&lora);
+	  	          printf("=================== RX ========================\r\n");
+	  	          printf("\r\n");
+	  	      }
+	  }
+	  else
+	  {
+		  printf("...");
+	  }
 
 
 
