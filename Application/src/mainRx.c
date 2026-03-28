@@ -63,6 +63,9 @@
   uint8_t humidity = 0;
   uint8_t temperature = 0;
 
+
+
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -91,6 +94,7 @@ PUTCHAR_PROTOTYPE
 }
 
 
+
 /* USER CODE END 0 */
 
 /**
@@ -100,8 +104,7 @@ PUTCHAR_PROTOTYPE
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-	char Version_data[256];
-	char ID_data[256];
+
 	LORA_P2P_Packet_t packet;
 	LORA_Status_t st_flag ;
 
@@ -159,87 +162,9 @@ int main(void)
  printf("=== LoRa P2P Started ===\r\n");
 
     /* Initialisation LoRa */
-    if(LORA_Init(&lora, &huart4) != LORA_STATUS_OK)
-    {
-        printf("Erreur init LoRa\r\n");
-        while(1);
-    }
-    else
-    {
-       printf("Le Module LoRa est bien initialisé\r\n");
-    }
-
-
-    if(LORA_GetVersion(&lora, Version_data) == LORA_STATUS_OK)
-    {
- 	   printf("Version du module : %s\r\n", Version_data);
-    }
-    else
-    {
- 	   printf("Erreur get_version\r\n");
-    }
-
-    if(LORA_GetID(&lora, ID_data) == LORA_STATUS_OK)
-    {
- 	   printf("ID du module :\r\n%s\r\n", ID_data);
-    }
-    else
-    {
- 	   printf("Erreur get_ID\r\n");
-    }
-
-
-
-    /* Test AT */
-    if(LORA_TestAT(&lora) != LORA_STATUS_OK)
-    {
-       printf("Module LoRa non ok pour AT\r\n");
-       while(1);
-    }
-    printf("Le Module LoRa TestAT réussi \r\n");
-
-
-
-    if(LORA_P2P_SetMode(&lora) != LORA_STATUS_OK)
-    {
-        printf("Erreur mode P2P\r\n");
-        while(1);
-    }
-    else
-    {
- 	   printf("Le choix du Mode : P2P \r\n");
-    }
-   // LORA_SendRaw(&lora,CMD_config);
-
-    st_flag = LORA_P2P_Config(&lora);
-
-
-    if( st_flag != LORA_STATUS_OK)
-    {
-        printf("Erreur configuration P2P\r\n");
-        while(1);
-    }
-    else
-    {
- 	   printf("Configuration P2P terminée\r\n");
-    }
-
-
-
-     /* Démarrage de la réception continue */
-
-     if(LORA_P2P_StartRX(&lora) != LORA_STATUS_OK)
-     {
-         printf("Erreur start RX\r\n");
-         while(1);
-     }
-     else
-     {
- 	    printf("Démarrage de la transmision : RX\r\n");
-     }
-
-
-
+ LORA_Init(&lora,&huart4);
+ LORA_TestAT(&lora);
+ LORA_P2P_StartRX(&lora);
 
       HAL_Delay(1000);
 	  printf("\r\n");
@@ -257,143 +182,50 @@ int main(void)
   {
     /* USER CODE END WHILE */
 
-	  // reception des donnees lora
-	  if (HAL_UART_Receive(lora.huart, (uint8_t*)&lora.rx_byte, 1, 100) == HAL_OK)
-	     {
-	         // stocker le byte dans le buffer
-	         lora.rx_buffer[lora.rx_index++] = lora.rx_byte;
-
-	         if (lora.rx_index >= LORA_RX_BUFFER_SIZE-1)
-	             lora.rx_index = 0;
-
-	         lora.rx_buffer[lora.rx_index] = '\0';
-
-	         // vérifier si une trame LoRa est arrivée
-	         if (strstr(lora.rx_buffer, "+TEST: RX"))
-	         {
-	             st_flag = LORA_P2P_Read(&lora,&packet);
-
-	             printf("Flag : %d\r\n", st_flag);
-
-	             if (st_flag != LORA_STATUS_OK)
-	             {
-	                 HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
-	                 printf("Erreur lecture trame LoRa\r\n");
-	             }
-	             else
-	             {
-	                 HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
-
-	                 printf("Trame : ");
-	                 for(int i = 0; i < packet.length; i++)
-	                 {
-	                     printf("%c", packet.payload[i]);
-	                 }
-
-	                 printf("\r\nRSSI : %d\r\n", packet.rssi);
-	                 printf("SNR  : %d\r\n", packet.snr);
-	             }
-
-	             memset(lora.rx_buffer,0,LORA_RX_BUFFER_SIZE);
-	             lora.rx_index = 0;
-
-	             LORA_P2P_StartRX(&lora);
-	         }
-	     }
-
-//	st_flag= LORA_P2P_Available(&lora);
-//	//printf("Flag_available : %d\r\n", st_flag);
-//	if(st_flag)
-//	{
-//	    st_flag = LORA_P2P_Read(&lora,&packet);
-//
-//	      printf("Flag : %d\r\n", st_flag);
-//
-//	      if (st_flag != LORA_STATUS_OK)
-//	      {
-//	          HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
-//	          printf("Erreur de lecture des Trames LoRa\r\n");
-//
-//	      }
-//	      else
-//	      {
-//	          HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
-//
-//	          printf("Lecture des Trames reussies\r\n");
-//
-//	          printf("Trame : ");
-//	          for(int i = 0; i < packet.length; i++)
-//	          {
-//	              printf("%c", packet.payload[i]);
-//	          }
-//	          printf("\r\n");
-//
-//	          printf("RSSI : %d\r\n", packet.rssi);
-//	          printf("SNR  : %d\r\n", packet.snr);
-//	          memset(lora.rx_buffer,0,LORA_RX_BUFFER_SIZE);
-//	          LORA_P2P_StartRX(&lora);
-//
-//	      }
-//	      HAL_Delay(50);
-//	  }
-//	  else
-//	  {
-//		  //printf("Aucune trame en reception actuellement\r\n");
-//
-//	  }
 
 
+	  	st_flag= LORA_P2P_Available(&lora);
+//	  	printf("Flag_available : %d\r\n", st_flag);
+	  	if(st_flag)
+	  	{
+	  	    st_flag = LORA_P2P_Read(&lora,&packet);
 
+	  	      //printf("Flag : %d\r\n", st_flag);
 
+	  	      if (st_flag != LORA_STATUS_OK)
+	  	      {
+	  	          HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
+	  	          //printf("Erreur de lecture des Trames LoRa\r\n");
 
-	  	    // lecture des donnees capteur voir si je peux mettre une condition sur lecture capteur
-//
-//	  	    printf("=========== Lecture donnée capteur de temperature et humidité ============\r\n");
-//	  	    DHT11_ReadData(&humidity, &temperature);
-//
-//	  	    // conversion des donnees capteur en ASCII
-//	  	    msgT_H(msgT,temperature,'T'); // la fonction permet de convertire la valeur de la temperature en ASCII
-//	  		  msgT_H(msgH,humidity,'H'); // la fonction permet de convertire la valeur de l'humidité en ASCII
-//	  	    if (humidity > 0 || temperature > 0)
-//	  		  {
-//	  		     HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
-//	  		  }
-//	  		  else
-//	  		  {
-//	  		     HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
-//	  		  }
-//
-//
-//	  	      HAL_Delay(1000);   // Lecture toutes les 2 secondes
-//	  		  LCD_SetCursor(&lcd, 0, 0);
-//	  		  LCD_EcrireTexte(&lcd, "Temp:");
-//	  		  LCD_SetCursor(&lcd, 6, 0);
-//	  		  LCD_EcrireTexte(&lcd, msgT);
-//	  		  LCD_SetCursor(&lcd, 0, 1);
-//	  		  LCD_EcrireTexte(&lcd, "Hum:");
-//	  		  LCD_SetCursor(&lcd, 6, 1);
-//	  		  LCD_EcrireTexte(&lcd, msgH);
-//
-//	  	    snprintf(LoRa_msg, 100, "Temperature : %s || Humidity : %s",msgT, msgH);
-//	  	    printf("LoRa TX  [%s]\r\n",LoRa_msg);
-//	  	    /* Envoi d’un paquet */
-//	  	    printf("\r\n");
-//	  	    printf("++++++++++++++++++++\r\n");
-//	  	    printf("+                  +\r\n");
-//	  	    printf("+      LoRa TX     +\r\n");
-//	  	    printf("+                  +\r\n");
-//	  	    printf("++++++++++++++++++++\r\n");
-//
-//
-//	  	   	if(LORA_P2P_SendString(&lora, LoRa_msg) == LORA_STATUS_OK)
-//	  	    {
-//	  	      printf("Paquet envoyé\r\n");
-//	  	    }
-//	  	    else
-//	  	   	{
-//	  	    	printf("Erreur envoi\r\n");
-//	  	    }
-//	  	   	HAL_Delay(1000);
+	  	      }
+	  	      else
+	  	      {
+	  	          HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
+	  	          printf("\r\n");
+	  	          printf("=================== RX ========================\r\n");
+	  	          printf("Lecture des Trames reussies\r\n");
+
+	  	          printf("Trame : ");
+	  	          for(int i = 0; i < packet.length; i++)
+	  	          {
+	  	              printf("%c", packet.payload[i]);
+	  	          }
+	  	          printf("\r\n");
+
+	  	          printf("RSSI : %d\r\n", packet.rssi);
+	  	          printf("SNR  : %d\r\n", packet.snr);
+	  	          memset(lora.rx_buffer,0,LORA_RX_BUFFER_SIZE);
+	  	          LORA_P2P_StartRX(&lora);
+	  	          printf("=================== RX ========================\r\n");
+	  	          printf("\r\n");
+	  	      }
+
+	  	  }
+	  	  else
+	  	  {
+//	  		  printf("Aucune trame en reception actuellement\r\n");
+
+	  	  }
 
 
 //    /* USER CODE BEGIN 3 */
