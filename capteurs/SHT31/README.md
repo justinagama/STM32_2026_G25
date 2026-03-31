@@ -137,3 +137,6 @@ while (1)
 
     HAL_Delay(1000);
 }
+```
+## 📚 Documentation
+* 📄 [Datasheet SHT3x-DIS (PDF)](https://sensirion.com/media/documents/213E6A3B/63A5A569/Datasheet_SHT3x_DIS.pdf) — *Document complet : registres, timings et précision.*
