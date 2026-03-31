@@ -74,6 +74,16 @@ Core/
 - Sortie UART debug
 - Gestion erreurs
 
+
+
+## 📚 Documentation Officielle
+
+Pour plus de détails techniques sur le capteur, vous pouvez consulter les documents suivants :
+
+* 📄 [Fiche Produit (Web PDF)](https://files.seeedstudio.com/wiki/Grove_Ultrasonic_Ranger/res/Grove_Ultrasonic_Ranger_101020010_Web.pdf)
+* ⚙️ [Datasheet du Capteur (GitHub)](https://github.com/SeeedDocument/Grove_Ultrasonic_Ranger/blob/master/res/Ultrasonic%20Ranger%20Datasheet.pdf)
+* 🌐 [Wiki Seeed Studio - Grove Ultrasonic Ranger](https://wiki.seeedstudio.com/Grove-Ultrasonic_Ranger/)
+  
 ##  Projet
 
 STM32L4 - 2026
