@@ -179,3 +179,6 @@ while (1)
     HAL_Delay(500);
 }
 ```
+## 📚 Documentation et Liens
+* 📄 [Mode d'emploi Joy-It SEN-HX711-01 (7 pages)](https://joy-it.net/en/products/SEN-HX711-01)
+* ⚙️ [Datasheet du composant HX711](https://www.mouser.com/datasheet/2/813/hx711_english-1022875.pdf)
