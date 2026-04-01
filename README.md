@@ -1,7 +1,7 @@
 # STM32_2026_G25
 Réalisation des systèmes BE
 
-# 🐝 Ruche Connectée — STM32L476RG
+# Ruche Connectée — STM32L476RG
 
 Auteur AGAMA Justin et 
 
@@ -307,7 +307,7 @@ Capture SDRangel avec un **HackRF One** en réception passive. Le waterfall mont
 
 ---
 
-## 📄 Documentation technique
+## Documentation technique
 
 | Module | Documentation |
 |---|---|
