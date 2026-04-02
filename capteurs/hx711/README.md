@@ -23,7 +23,7 @@ Le driver gère :
 
 ---
 
-## ⚙️ Prérequis
+## Prérequis
 
 * Microcontrôleur STM32
 * HAL STM32 configuré (GPIO)
@@ -33,7 +33,7 @@ Le driver gère :
 
 ---
 
-## 🔌 Connexion matérielle
+## Connexion matérielle
 
 | HX711 | STM32       |
 | ----- | ----------- |
@@ -44,7 +44,7 @@ Le driver gère :
 
 ---
 
-## 📦 Installation
+## Installation
 
 1. Ajouter les fichiers au projet :
 
@@ -61,7 +61,7 @@ hx711.h
 
 ---
 
-## 🛠️ Utilisation
+## Utilisation
 
 ### 🔹 Initialisation
 
@@ -144,7 +144,7 @@ coefficient = valeur_brute / poids_reel
 
 ---
 
-## ⏱️ Timing critique
+## Timing critique
 
 Le driver utilise le compteur **DWT (Data Watchpoint and Trace)** pour générer des délais en microsecondes :
 
@@ -160,7 +160,7 @@ delay_us(1);
 
 ---
 
-## 🧪 Exemple complet
+##  Exemple complet
 
 ```c
 HX711_t hx;
@@ -179,6 +179,6 @@ while (1)
     HAL_Delay(500);
 }
 ```
-## 📚 Documentation et Liens
+## Documentation et Liens
 * 📄 [Mode d'emploi Joy-It SEN-HX711-01 (7 pages)](https://joy-it.net/en/products/SEN-HX711-01)
 * ⚙️ [Datasheet du composant HX711](https://www.mouser.com/datasheet/2/813/hx711_english-1022875.pdf)
