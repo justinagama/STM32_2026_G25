@@ -1,4 +1,4 @@
-# 📟 STM32 LCD RGB I2C Driver
+# STM32 LCD RGB I2C Driver
 
 Driver embarqué en C pour écran **LCD alphanumérique avec rétroéclairage RGB** via interface **I2C**, compatible **STM32 (HAL)**.
 
@@ -6,7 +6,7 @@ Driver embarqué en C pour écran **LCD alphanumérique avec rétroéclairage RG
 
 ---
 
-## 🚀 Présentation
+## Présentation
 
 Ce projet propose une bibliothèque légère permettant de piloter un écran **LCD RGB type Grove** avec un microcontrôleur STM32.
 
@@ -20,7 +20,7 @@ Le driver implémente :
 
 ---
 
-## 🧠 Architecture logicielle
+## Architecture logicielle
 
 ```text
 Application utilisateur
@@ -34,7 +34,7 @@ LCD RGB (bus I2C)
 
 ---
 
-## ⚙️ Prérequis
+## Prérequis
 
 * Microcontrôleur STM32
 * HAL STM32 configuré (**I2C activé**)
@@ -43,7 +43,7 @@ LCD RGB (bus I2C)
 
 ---
 
-## 🔌 Connexion matérielle
+## Connexion matérielle
 
 | LCD | STM32     |
 | --- | --------- |
@@ -54,7 +54,7 @@ LCD RGB (bus I2C)
 
 ---
 
-## 📦 Installation
+## Installation
 
 1. Copier les fichiers dans votre projet :
 
@@ -73,7 +73,7 @@ lib_lcd.h
 
 ---
 
-## 🛠️ Utilisation
+## Utilisation
 
 ### 🔹 Initialisation
 
@@ -129,7 +129,7 @@ LCD_SetRGB(&lcd, 255, 100, 50);
 
 ---
 
-## 🎯 Fonctionnalités
+## Fonctionnalités
 
 * ✅ Communication I2C via HAL STM32
 * ✅ Support LCD 16x2 (extensible)
