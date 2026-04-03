@@ -5,7 +5,7 @@ Réalisation des systèmes BE
 
 Auteur AGAMA Justin et 
 
-Encadré par : 
+Encadré par : PERISSE Thierry
 
 Projet de bureau d'étude embarqué sur **STM32L476RG** (HAL). Le système surveille en temps réel l'état d'une ruche via plusieurs capteurs, affiche les données localement sur un écran LCD RGB, et les transmet sans fil par **LoRa P2P** à une unité de réception distante.
 
