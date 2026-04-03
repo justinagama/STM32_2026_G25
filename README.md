@@ -122,6 +122,12 @@ Ces données sont collectées par le **STM32 émetteur** (côté ruche), affich�
 | `UART4 TX/RX` | LoRa-E5 | Commandes AT |
 | `USART2 TX` | PC — debug | printf via ST-Link |
 
+
+
+![Schema du cablage electrique de la station TX](Application/Demo/cablageLoRaTX2.png)
+
+
+
 > ⚠️ TIM6 doit être configuré avec un prescaler tel que la fréquence soit **exactement 1 MHz** pour que `Delay_us()` soit précis.
 
 ---
