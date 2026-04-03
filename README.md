@@ -122,10 +122,9 @@ Ces données sont collectées par le **STM32 émetteur** (côté ruche), affich�
 | `UART4 TX/RX` | LoRa-E5 | Commandes AT |
 | `USART2 TX` | PC — debug | printf via ST-Link |
 
-
+## Schéma de câblage : Station TX
 
 ![Schema du cablage electrique de la station TX](Application/Demo/cablageLoRaTX2.png)
-
 
 
 > ⚠️ TIM6 doit être configuré avec un prescaler tel que la fréquence soit **exactement 1 MHz** pour que `Delay_us()` soit précis.
@@ -284,7 +283,7 @@ while (1) {
 
 ## 📡 Démonstration
 
-### Double terminal — Émetteur (droite) et Récepteur (gauche)
+### Double terminal : Émetteur (droite) et Récepteur (gauche)
 
 ![Double terminal RX TX](Application/Demo/demo_rxtx.png)
 
@@ -292,7 +291,7 @@ Les deux STM32 fonctionnent en simultané. Chaque trame envoyée côté émetteu
 
 ---
 
-### Sniff RF à 868 MHz — HackRF + SDRangel
+### Sniff RF à 868 MHz : HackRF + SDRangel
 
 ![SDRangel waterfall LoRa](Application/Demo/sdr_lora.png)
 
