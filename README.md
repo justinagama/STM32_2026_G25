@@ -3,7 +3,7 @@ Réalisation des systèmes BE
 
 # Ruche Connectée
 
-Auteur AGAMA Justin et 
+Auteur AGAMA Justin et MARDNLI Ali
 
 Encadré par : PERISSE Thierry
 
